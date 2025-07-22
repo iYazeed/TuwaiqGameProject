@@ -286,11 +286,7 @@ namespace SlimUI.ModernMenu{
 				yield return null;
 			}
 		}
-		public void onPlayButtonPressed()
-		{
-			SceneManager.LoadScene("Game");
 		
-		}
 	}
 	
 }
