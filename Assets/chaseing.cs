@@ -3,19 +3,22 @@ using UnityEngine.AI;
 
 public class chaseing : MonoBehaviour
 {
+    public Transform player;
     private NavMeshAgent agent;
-    public Transform Player;
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
 
+        if (player == null)
+            player = GameObject.FindGameObjectWithTag("Player").transform;
     }
-   
-    // Update is called once per frame
+
     void Update()
     {
-        if (Player != null) { 
-            agent.SetDestination(Player.position);
+        if (player != null)
+        {
+            agent.SetDestination(player.position);
         }
     }
 }
