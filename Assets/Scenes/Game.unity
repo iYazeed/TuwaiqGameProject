@@ -1206,15 +1206,21 @@ GameObject:
   serializedVersion: 6
   m_Component:
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   - component: {fileID: 1179833727}
   - component: {fileID: 1179833726}
   - component: {fileID: 1179833725}
   - component: {fileID: 1179833728}
 =======
+=======
+>>>>>>> Stashed changes
   - component: {fileID: 1019617419}
   - component: {fileID: 1019617422}
   - component: {fileID: 1019617421}
   - component: {fileID: 1019617420}
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
   m_Layer: 0
   m_Name: Camera
@@ -1237,15 +1243,25 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1179833728
+=======
+  m_Father: {fileID: 752622104}
+  m_LocalEulerAnglesHint: {x: 20.637, y: 0, z: 0}
+--- !u!114 &1019617420
+>>>>>>> Stashed changes
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< Updated upstream
   m_GameObject: {fileID: 1179833724}
+=======
+  m_GameObject: {fileID: 1019617418}
+>>>>>>> Stashed changes
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
@@ -1283,6 +1299,7 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+<<<<<<< Updated upstream
 --- !u!1 &1283213168
 GameObject:
   m_ObjectHideFlags: 0
@@ -1366,6 +1383,8 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+=======
+>>>>>>> Stashed changes
 --- !u!81 &1019617421
 AudioListener:
   m_ObjectHideFlags: 0
