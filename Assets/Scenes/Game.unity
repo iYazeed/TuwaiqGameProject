@@ -1210,11 +1210,14 @@ GameObject:
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   - component: {fileID: 1179833727}
   - component: {fileID: 1179833726}
   - component: {fileID: 1179833725}
   - component: {fileID: 1179833728}
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 =======
@@ -1231,6 +1234,9 @@ GameObject:
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -1265,9 +1271,15 @@ Transform:
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1179833728
+=======
+  m_Father: {fileID: 752622104}
+  m_LocalEulerAnglesHint: {x: 20.637, y: 0, z: 0}
+--- !u!114 &1019617420
+>>>>>>> Stashed changes
 =======
   m_Father: {fileID: 752622104}
   m_LocalEulerAnglesHint: {x: 20.637, y: 0, z: 0}
@@ -1297,7 +1309,11 @@ MonoBehaviour:
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   m_GameObject: {fileID: 1179833724}
+=======
+  m_GameObject: {fileID: 1019617418}
+>>>>>>> Stashed changes
 =======
   m_GameObject: {fileID: 1019617418}
 >>>>>>> Stashed changes
@@ -1347,6 +1363,7 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -1434,6 +1451,8 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 =======
