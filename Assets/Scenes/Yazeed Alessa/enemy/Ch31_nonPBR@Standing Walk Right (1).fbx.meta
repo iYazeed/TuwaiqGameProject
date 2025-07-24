@@ -1,34 +1,9 @@
 fileFormatVersion: 2
-guid: 3da1379598368ad46b8bf2a9427f88f2
+guid: 2b3aec22c0b51f94ca629ad73765ef39
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: Ch31_1001_Diffuse
-    second: {fileID: 2800000, guid: b34e93b92ec4b1b47a94abf60a3f4482, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: Ch31_1001_Glossiness
-    second: {fileID: 2800000, guid: 4c0cc68df1ec26147a71f064f38f9c41, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: Ch31_1001_Normal
-    second: {fileID: 2800000, guid: 70045e1f94c647742bd6adb99468b130, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: Ch31_1001_Specular
-    second: {fileID: 2800000, guid: 3ace0a16ffe613d45b81b04d734b25a8, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: Ch31_1002_Diffuse
-    second: {fileID: 2800000, guid: c4556ea8f19ae3b438dcf429e9c6eec3, type: 3}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -56,11 +31,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Unarmed Walk Forward
+      name: Standing Walk Right
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 81
+      lastFrame: 76
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
