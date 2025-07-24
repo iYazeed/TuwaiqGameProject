@@ -866,7 +866,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 950cc48830d9e2f419c58e359402a09a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 1676224568}
+  player: {fileID: 0}
 --- !u!195 &106689739
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2051,7 +2051,11 @@ MonoBehaviour:
   walkSpeed: 4
   runSpeed: 8
   gravity: -9.81
+  rotationSpeed: 5
+  verticalSensitivity: 2
+  maxVerticalAngle: 60
   animator: {fileID: 1676224566}
+  cameraTransform: {fileID: 1657027504}
 --- !u!4 &1676224568 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3da1379598368ad46b8bf2a9427f88f2, type: 3}
@@ -2099,7 +2103,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
