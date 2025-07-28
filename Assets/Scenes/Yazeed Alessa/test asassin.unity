@@ -866,7 +866,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 950cc48830d9e2f419c58e359402a09a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
 --- !u!195 &106689739
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -887,7 +886,7 @@ NavMeshAgent:
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 0
-  m_WalkableMask: 4294967295
+  m_WalkableMask: 5
   m_ObstacleAvoidanceType: 4
 --- !u!95 &106689740
 Animator:
@@ -1883,6 +1882,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 3da1379598368ad46b8bf2a9427f88f2, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 1448977649786777617, guid: 3da1379598368ad46b8bf2a9427f88f2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 74.147446
@@ -2228,7 +2231,7 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 1.32, z: 0}
 --- !u!64 &1676224570
 MeshCollider:
   m_ObjectHideFlags: 0
