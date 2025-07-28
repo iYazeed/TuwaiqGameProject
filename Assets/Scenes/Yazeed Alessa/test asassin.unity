@@ -1405,6 +1405,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 121.86527
       objectReference: {fileID: 0}
+    - target: {fileID: -7972807020593684431, guid: 3da1379598368ad46b8bf2a9427f88f2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -7688348300522001610, guid: 3da1379598368ad46b8bf2a9427f88f2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 48.39723
@@ -1416,6 +1420,10 @@ PrefabInstance:
     - target: {fileID: -7688348300522001610, guid: 3da1379598368ad46b8bf2a9427f88f2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 7.5686526
+      objectReference: {fileID: 0}
+    - target: {fileID: -7677018867532888423, guid: 3da1379598368ad46b8bf2a9427f88f2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -7095858558898208420, guid: 3da1379598368ad46b8bf2a9427f88f2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2008,6 +2016,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3da1379598368ad46b8bf2a9427f88f2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1676224570}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3da1379598368ad46b8bf2a9427f88f2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1676224571}
   m_SourcePrefab: {fileID: 100100000, guid: 3da1379598368ad46b8bf2a9427f88f2, type: 3}
 --- !u!1 &1676224565 stripped
 GameObject:
@@ -2056,6 +2067,7 @@ MonoBehaviour:
   maxVerticalAngle: 60
   animator: {fileID: 1676224566}
   cameraTransform: {fileID: 1657027504}
+  torchHoldPoint: {fileID: 0}
 --- !u!4 &1676224568 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3da1379598368ad46b8bf2a9427f88f2, type: 3}
@@ -2108,6 +2120,19 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
+--- !u!114 &1676224571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1676224565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa307af266122a84eaf8f7687559ac8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hasKey: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -12,10 +12,11 @@ public class playermovment : MonoBehaviour
 
     public Animator animator;
     public Transform cameraTransform; // اربط كاميرا اللاعب هنا
-
+    public Transform torchHoldPoint;  // اربط نقطة حمل الشعلة باليد
     private CharacterController controller;
     private Vector3 velocity;
     private float verticalRotation = 0f;
+    private bool hasTorch = false;
 
     void Start()
     {
@@ -29,11 +30,10 @@ public class playermovment : MonoBehaviour
 
     void Update()
     {
-        // 🔁 تدوير اللاعب أفقيًا (يمين/يسار)
+        // 🎮 التحكم في الدوران
         float mouseX = Input.GetAxis("Mouse X") * rotationSpeed;
         transform.Rotate(0f, mouseX, 0f);
 
-        // ⬆⬇ تدوير الكاميرا رأسيًا (أعلى/أسفل)
         float mouseY = Input.GetAxis("Mouse Y") * verticalSensitivity;
         verticalRotation -= mouseY;
         verticalRotation = Mathf.Clamp(verticalRotation, -maxVerticalAngle, maxVerticalAngle);
@@ -41,7 +41,7 @@ public class playermovment : MonoBehaviour
         if (cameraTransform != null)
             cameraTransform.localRotation = Quaternion.Euler(verticalRotation, 0f, 0f);
 
-        // 🎮 التحكم بالحركة
+        // 🔄 الحركة
         bool forward = Input.GetKey(KeyCode.W);
         bool backward = Input.GetKey(KeyCode.S);
         bool right = Input.GetKey(KeyCode.D);
@@ -63,6 +63,35 @@ public class playermovment : MonoBehaviour
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
 
-        // ✨ ممكن تضيف كود الأنميشن هنا
+        // ✨ الأنميشن
+        animator.SetFloat("Speed", move.magnitude);
+
+        // 🕯️ التقاط الشعلة
+        if (Input.GetKeyDown(KeyCode.E) && !hasTorch)
+        {
+            Collider[] hits = Physics.OverlapSphere(transform.position, 2f);
+            foreach (var hit in hits)
+            {
+                if (hit.CompareTag("Torch"))
+                {
+                    PickUpTorch(hit.gameObject);
+                    break;
+                }
+            }
+        }
+    }
+
+    void PickUpTorch(GameObject torch)
+    {
+        hasTorch = true;
+
+        torch.transform.SetParent(torchHoldPoint);
+        torch.transform.localPosition = Vector3.zero;
+        torch.transform.localRotation = Quaternion.identity;
+
+        if (torch.TryGetComponent<Rigidbody>(out var rb)) rb.isKinematic = true;
+        if (torch.TryGetComponent<Collider>(out var col)) col.enabled = false;
+
+        animator.SetBool("HasTorch", true); // يتحول لأنميشن الشعلة (tw)
     }
 }

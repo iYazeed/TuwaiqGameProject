@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c7dc487e93628b94a859ef68704d329f
+guid: d0d3c6cadee4ef74bbff039509975a75
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -31,11 +31,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Unarmed Walk Forward
+      name: Standing Torch Walk Forward
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 81
+      lastFrame: 66
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
