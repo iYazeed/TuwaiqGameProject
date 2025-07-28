@@ -11,8 +11,11 @@ public class playermovment : MonoBehaviour
     public float maxVerticalAngle = 60f;
 
     public Animator animator;
-    public Transform cameraTransform; // اربط كاميرا اللاعب هنا
-    public Transform torchHoldPoint;  // اربط نقطة حمل الشعلة باليد
+    public Transform cameraTransform;       // Player's camera
+    public GameObject torchInWorld;         // Torch on ground
+    public GameObject torchInHand;          // Torch in player's hand
+    public float interactDistance = 2f;     // Interaction range
+
     private CharacterController controller;
     private Vector3 velocity;
     private float verticalRotation = 0f;
@@ -21,77 +24,67 @@ public class playermovment : MonoBehaviour
     void Start()
     {
         controller = GetComponent<CharacterController>();
-        if (animator == null)
-            animator = GetComponent<Animator>();
+        if (animator == null) animator = GetComponent<Animator>();
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        // Make sure the torch in hand is hidden initially
+        if (torchInHand != null) torchInHand.SetActive(false);
     }
 
     void Update()
     {
-        // 🎮 التحكم في الدوران
+        // 🎮 Rotate horizontally
         float mouseX = Input.GetAxis("Mouse X") * rotationSpeed;
         transform.Rotate(0f, mouseX, 0f);
 
+        // ⬆⬇ Rotate camera vertically
         float mouseY = Input.GetAxis("Mouse Y") * verticalSensitivity;
         verticalRotation -= mouseY;
         verticalRotation = Mathf.Clamp(verticalRotation, -maxVerticalAngle, maxVerticalAngle);
-
         if (cameraTransform != null)
             cameraTransform.localRotation = Quaternion.Euler(verticalRotation, 0f, 0f);
 
-        // 🔄 الحركة
-        bool forward = Input.GetKey(KeyCode.W);
-        bool backward = Input.GetKey(KeyCode.S);
-        bool right = Input.GetKey(KeyCode.D);
-        bool left = Input.GetKey(KeyCode.A);
-        bool isRunning = Input.GetKey(KeyCode.LeftShift);
-
+        // 🕹️ Movement input
         Vector3 move = Vector3.zero;
-        if (forward) move += transform.forward;
-        if (backward) move -= transform.forward;
-        if (right) move += transform.right;
-        if (left) move -= transform.right;
+        if (Input.GetKey(KeyCode.W)) move += transform.forward;
+        if (Input.GetKey(KeyCode.S)) move -= transform.forward;
+        if (Input.GetKey(KeyCode.D)) move += transform.right;
+        if (Input.GetKey(KeyCode.A)) move -= transform.right;
 
-        float speed = isRunning ? runSpeed : walkSpeed;
+        float speed = Input.GetKey(KeyCode.LeftShift) ? runSpeed : walkSpeed;
         controller.Move(move.normalized * speed * Time.deltaTime);
 
-        // ⚖️ الجاذبية
+        // 🌍 Gravity
         if (controller.isGrounded && velocity.y < 0)
             velocity.y = -2f;
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
 
-        // ✨ الأنميشن
+        // 🎞️ Walk animation
         animator.SetFloat("Speed", move.magnitude);
 
-        // 🕯️ التقاط الشعلة
-        if (Input.GetKeyDown(KeyCode.E) && !hasTorch)
+        // 🕯️ Torch interaction
+        if (torchInWorld != null && !hasTorch)
         {
-            Collider[] hits = Physics.OverlapSphere(transform.position, 2f);
-            foreach (var hit in hits)
+            float distance = Vector3.Distance(transform.position, torchInWorld.transform.position);
+            if (distance <= interactDistance && Input.GetKeyDown(KeyCode.E))
             {
-                if (hit.CompareTag("Torch"))
-                {
-                    PickUpTorch(hit.gameObject);
-                    break;
-                }
+                PickUpTorch();
             }
         }
     }
 
-    void PickUpTorch(GameObject torch)
+    void PickUpTorch()
     {
         hasTorch = true;
 
-        torch.transform.SetParent(torchHoldPoint);
-        torch.transform.localPosition = Vector3.zero;
-        torch.transform.localRotation = Quaternion.identity;
+        // Hide world torch and show held torch
+        torchInWorld.SetActive(false);
+        torchInHand.SetActive(true);
 
-        if (torch.TryGetComponent<Rigidbody>(out var rb)) rb.isKinematic = true;
-        if (torch.TryGetComponent<Collider>(out var col)) col.enabled = false;
-
-        animator.SetBool("HasTorch", true); // يتحول لأنميشن الشعلة (tw)
+        // Trigger animation
+        animator.SetTrigger("PickUpTorch"); // Make sure this trigger leads to "tw" animation
     }
 }
