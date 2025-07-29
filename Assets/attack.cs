@@ -23,7 +23,7 @@ public class EnemyAttack : MonoBehaviour
 
             // ⏱️ منع الهجوم لمدة قصيرة لتجنب التكرار السريع
             canAttack = false;
-            Invoke(nameof(ResetAttack), 1f); // عدّل الوقت حسب نوع الهجوم
+            Invoke(nameof(ResetAttack), 3f); // عدّل الوقت حسب نوع الهجوم
         }
     }
 
