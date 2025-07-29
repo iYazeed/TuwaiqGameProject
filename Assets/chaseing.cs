@@ -1,40 +1,24 @@
 using UnityEngine;
-using UnityEngine.AI;
 
-[RequireComponent(typeof(NavMeshAgent))]
 public class EnemyChase : MonoBehaviour
 {
-    [Tooltip("Drag your Player Transform here, or leave blank to auto-find by the 'Player' tag.")]
-    [SerializeField] private Transform player;
-
-    private NavMeshAgent agent;
-
-    void Awake()
-    {
-        agent = GetComponent<NavMeshAgent>();
-    }
-
-    void Start()
-    {
-        if (player == null)
-        {
-            GameObject found = GameObject.FindGameObjectWithTag("Player");
-            if (found != null)
-            {
-                player = found.transform;
-            }
-            else
-            {
-                Debug.LogError($"[{nameof(EnemyChase)}] No Player found! Make sure your Player GameObject is tagged 'Player' or assign it in the Inspector.", this);
-            }
-        }
-    }
+    public Transform player;         // ãæŞÚ ÇááÇÚÈ
+    public float speed = 5f;         // ÓÑÚÉ ÇáãØÇÑÏÉ
+    public float stoppingDistance = 2f; // ÇáãÓÇİÉ Çááí íÊæŞİ İíåÇ ÇáÚÏæ
 
     void Update()
     {
-        if (agent != null && player != null)
+        // ÇÍÓÈ ÇáãÓÇİÉ Èíä ÇáÚÏæ æÇááÇÚÈ
+        float distance = Vector3.Distance(transform.position, player.position);
+
+        // ÅĞÇ ßÇä ÇáÚÏæ ÈÚíÏ ÈãÇ İíå ÇáßİÇíÉ¡ íÊÍÑß äÍæå
+        if (distance > stoppingDistance)
         {
-            agent.SetDestination(player.position);
+            Vector3 direction = (player.position - transform.position).normalized;
+            transform.position += direction * speed * Time.deltaTime;
+
+            // ÇÎÊíÇÑí: æÌå ÇáÚÏæ äÍæ ÇááÇÚÈ
+            transform.LookAt(player);
         }
     }
 }

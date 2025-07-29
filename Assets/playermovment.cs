@@ -63,7 +63,7 @@ public class playermovment : MonoBehaviour
         controller.Move(velocity * Time.deltaTime);
 
         // 🎞️ Walk animation
-        animator.SetFloat("Speed", move.magnitude);
+        animator.SetFloat("Speed", move.magnitude > 0.1f ? 1f : 0f);
 
         // 🕯️ Torch interaction
         if (torchInWorld != null && !hasTorch)
