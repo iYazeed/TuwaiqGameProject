@@ -6,14 +6,14 @@ public class DoorController : MonoBehaviour
 {
     [Header("Player Settings")]
     public string playerTag = "Player";
-    public KeyCode interactKey = KeyCode.E;
+    public KeyCode interactKey = KeyCode.F;
 
     [Header("Prompts")]
-    public string promptOpenText = "اضغط E لفتح الباب";
-    public string promptNoKeyText = "دور المفتاح";
+    public string promptOpenText = "Press F to open the door";
+    public string promptNoKeyText = "Find the key";
 
     [Header("Door Rotation")]
-    [Tooltip("زاوية فتح الباب على محور Y فقط")]
+    [Tooltip("Door opening angle on the Y axis only")]
     public float openAngleY = 90f;
     public float openSpeed = 2f;
 
@@ -25,12 +25,12 @@ public class DoorController : MonoBehaviour
 
     void Start()
     {
-        // خزن الدوران الأصلي (localRotation)
+        // Store the original local rotation
         closedRot = transform.localRotation;
-        // جهّز الدوران المفتوح على Y فقط
+        // Prepare the open rotation (Y axis only)
         openRot = closedRot * Quaternion.Euler(0, openAngleY, 0);
 
-        // تأكد إن الكوليدر Trigger
+        // Ensure the collider is set as Trigger
         var col = GetComponent<Collider>();
         col.isTrigger = true;
     }
@@ -79,6 +79,7 @@ public class DoorController : MonoBehaviour
     {
         if (canInteract && !doorOpened && playerInv != null)
         {
+            // Show the appropriate prompt
             string txt = playerInv.hasKey ? promptOpenText : promptNoKeyText;
             var size = GUI.skin.label.CalcSize(new GUIContent(txt));
             float x = (Screen.width - size.x) * 0.5f;
