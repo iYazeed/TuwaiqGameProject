@@ -1,40 +1,45 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
+[RequireComponent(typeof(AudioSource))]
 public class KeyPickup : MonoBehaviour
 {
     public string playerTag = "Player";        // تأكد إنّ الـPlayer عليه Tag = "Player"
-    public KeyCode pickupKey = KeyCode.E;     // الزر اللي يأخذ المفتاح
-    [TextArea] public string promptText = "اضغط E لأخذ المفتاح";
+    public KeyCode pickupKey = KeyCode.E;      // الزر اللي يأخذ المفتاح
+
+    [TextArea]
+    public string promptText = "Press E to pick up the key";
+
+    public AudioClip pickupSound;             // صوت التقاط المفتاح
 
     private bool canPickup = false;           // هل اللاعب قريب بما فيه الكفاية؟
-    private Player playerInv;        // مرجع لإنفنتوري اللاعب
+    private Player playerInv;                 // مرجع لإنفنتوري اللاعب
+    private AudioSource audioSource;
 
     void Start()
     {
         // خلي الكوليدر Trigger
         var col = GetComponent<Collider>();
         col.isTrigger = true;
-        // تأكد إنّ الماتيريال أو الميش الحالي ظاهر للـTrigger (Layer & Mask)
+
+        // جهّز الـAudioSource
+        audioSource = GetComponent<AudioSource>();
+        audioSource.playOnAwake = false;
     }
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Hit Trigger by: " + other.name);
         if (other.CompareTag(playerTag))
         {
-            Debug.Log("Player entered pickup area");
             canPickup = true;
             playerInv = other.GetComponent<Player>();
         }
     }
 
-
     void OnTriggerExit(Collider other)
     {
         if (other.CompareTag(playerTag))
         {
-            // اللاعب خرج من مجال الالتقاط
             canPickup = false;
             playerInv = null;
         }
@@ -46,8 +51,13 @@ public class KeyPickup : MonoBehaviour
         {
             // اعطيه المفتاح
             playerInv.hasKey = true;
-            // خبّي المفتاح من المشهد
-            gameObject.SetActive(false);
+
+            // شغّل صوت التقاط المفتاح
+            if (pickupSound != null)
+                audioSource.PlayOneShot(pickupSound);
+
+            // خبّي المفتاح من المشهد بعد قليل (حتى يسمع الصوت كامل)
+            Destroy(gameObject, pickupSound != null ? pickupSound.length : 0f);
         }
     }
 
