@@ -4,29 +4,36 @@
 public class PowerPanel : MonoBehaviour
 {
     [Header("Player Settings")]
-    public string playerTag = "Player";      // Tag للاعب
-    public KeyCode interactKey = KeyCode.E;     // زر التفاعل
+    public string playerTag = "Player";
+    public KeyCode interactKey = KeyCode.E;
 
     [Header("Power Targets")]
-    public Light[] lightsToEnable;   // مصابيح تنفع لما تشغل الكهرباء
-    public GameObject[] devicesToPower;   // أجهزة أو جيم أوبجكت تنشط عند توفر الكهرباء
+    public Light[] lightsToEnable;
+    public GameObject[] devicesToPower;
+
+    [Header("UI Hint Message")]
+    public GameObject uiMessage; // 🔔 الرسالة اللي تطلع تحت الشاشة
 
     [Header("Prompts")]
     [TextArea] public string promptOn = "اضغط E لتشغيل الكهرباء";
     [TextArea] public string promptOff = "الكهرباء شغالة";
 
-    bool canInteract = false;
-    bool isPowered = false;
+    public bool canInteract = false;
+    public bool isPowered = false;
 
     void Start()
     {
-        // اضبط الـCollider كـTrigger
+        // ضبط الكوليدر
         var col = GetComponent<BoxCollider>();
         col.isTrigger = true;
 
-        // اطفئ كل الأضواء والأجهزة بالبداية
+        // إطفاء الأشياء
         foreach (var l in lightsToEnable) if (l != null) l.enabled = false;
         foreach (var d in devicesToPower) if (d != null) d.SetActive(false);
+
+        // تفعيل الرسالة في البداية
+        if (uiMessage != null)
+            uiMessage.SetActive(true);
     }
 
     void OnTriggerEnter(Collider other)
@@ -45,10 +52,14 @@ public class PowerPanel : MonoBehaviour
     {
         if (canInteract && !isPowered && Input.GetKeyDown(interactKey))
         {
-            // شغّل الكهرباء
+            // شغل الكهرباء
             isPowered = true;
             foreach (var l in lightsToEnable) if (l != null) l.enabled = true;
             foreach (var d in devicesToPower) if (d != null) d.SetActive(true);
+
+            // إخفاء الرسالة بعد التشغيل
+            if (uiMessage != null)
+                uiMessage.SetActive(false);
         }
     }
 
@@ -56,7 +67,6 @@ public class PowerPanel : MonoBehaviour
     {
         if (!canInteract) return;
 
-        // عرض الرسالة المناسبة
         string msg = isPowered ? promptOff : promptOn;
         Vector2 size = GUI.skin.label.CalcSize(new GUIContent(msg));
         float x = (Screen.width - size.x) * 0.5f;
