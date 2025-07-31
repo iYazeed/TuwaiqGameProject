@@ -3,38 +3,35 @@
 [RequireComponent(typeof(Collider))]
 public class Getkey : MonoBehaviour
 {
-    public string playerTa = "Player";        // تأكد إنّ الـPlayer عليه Tag = "Player"
-    public KeyCode pickupKe = KeyCode.F;     // الزر اللي يأخذ المفتاح
+    public string playerTa = "Player";       // تأكد إنّ التاق مضبوط
+    public KeyCode pickupKe = KeyCode.F;      // زر الالتقاط
     [TextArea] public string promptTex = "اضغط F لأخذ المفتاح";
+    public AudioClip pickupSound;               // صوت التقاط المفتاح
 
-    private bool canPicku = false;           // هل اللاعب قريب بما فيه الكفاية؟
-    private Player playerIn;        // مرجع لإنفنتوري اللاعب
+    private bool canPicku = false;              // هل اللاعب قريب؟
+    private Player playerIn;                    // مرجع سكربت Player
+    private Collider myCollider;
 
     void Start()
     {
-        // خلي الكوليدر Trigger
-        var col = GetComponent<Collider>();
-        col.isTrigger = true;
-        // تأكد إنّ الماتيريال أو الميش الحالي ظاهر للـTrigger (Layer & Mask)
+        // تحضير الكوليدر كـ Trigger
+        myCollider = GetComponent<Collider>();
+        myCollider.isTrigger = true;
     }
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Hit Trigger by: " + other.name);
         if (other.CompareTag(playerTa))
         {
-            Debug.Log("Player entered pickup area");
             canPicku = true;
             playerIn = other.GetComponent<Player>();
         }
     }
 
-
     void OnTriggerExit(Collider other)
     {
         if (other.CompareTag(playerTa))
         {
-            // اللاعب خرج من مجال الالتقاط
             canPicku = false;
             playerIn = null;
         }
@@ -44,10 +41,15 @@ public class Getkey : MonoBehaviour
     {
         if (canPicku && playerIn != null && Input.GetKeyDown(pickupKe))
         {
-            // اعطيه المفتاح
+            // 1. منحه المفتاح
             playerIn.hasGardenKey = true;
-            // خبّي المفتاح من المشهد
-            gameObject.SetActive(false);
+
+            // 2. شغل الصوت فورًا في موقع المفتاح
+            if (pickupSound != null)
+                AudioSource.PlayClipAtPoint(pickupSound, transform.position);
+
+            // 3. اختفِ المفتاح فورًا
+            Destroy(gameObject);
         }
     }
 
@@ -55,9 +57,8 @@ public class Getkey : MonoBehaviour
     {
         if (canPicku && playerIn != null)
         {
-            // نص في منتصف الشاشة
             var size = GUI.skin.label.CalcSize(new GUIContent(promptTex));
-            float x = (Screen.width - size.x) / 2;
+            float x = (Screen.width - size.x) * 0.5f;
             float y = (Screen.height - size.y) * 0.8f;
             GUI.Label(new Rect(x, y, size.x, size.y), promptTex);
         }

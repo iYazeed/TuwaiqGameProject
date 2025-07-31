@@ -2,6 +2,7 @@
 using System.Collections;
 
 [RequireComponent(typeof(Collider))]
+[RequireComponent(typeof(AudioSource))]
 public class DoorController : MonoBehaviour
 {
     [Header("Player Settings")]
@@ -17,11 +18,15 @@ public class DoorController : MonoBehaviour
     public float openAngleY = 90f;
     public float openSpeed = 2f;
 
-    bool canInteract = false;
-    bool doorOpened = false;
-    Player playerInv;
-    Quaternion closedRot;
-    Quaternion openRot;
+    [Header("Audio")]
+    public AudioClip openSound;       // صوت فتح الباب
+
+    private bool canInteract = false;
+    private bool doorOpened = false;
+    private Player playerInv;
+    private Quaternion closedRot;
+    private Quaternion openRot;
+    private AudioSource audioSource;
 
     void Start()
     {
@@ -33,6 +38,10 @@ public class DoorController : MonoBehaviour
         // Ensure the collider is set as Trigger
         var col = GetComponent<Collider>();
         col.isTrigger = true;
+
+        // Prepare AudioSource
+        audioSource = GetComponent<AudioSource>();
+        audioSource.playOnAwake = false;
     }
 
     void OnTriggerEnter(Collider other)
@@ -65,6 +74,16 @@ public class DoorController : MonoBehaviour
     IEnumerator OpenDoor()
     {
         doorOpened = true;
+
+        // 1. تشغيل الصوت كبداية لحركة الباب
+        if (openSound != null)
+        {
+            audioSource.clip = openSound;
+            audioSource.loop = false;    // أو true لو تبي يكرر حتى تتوقف يدويًا
+            audioSource.Play();
+        }
+
+        // 2. حركة فتح الباب
         float t = 0f;
         while (t < 1f)
         {
@@ -73,7 +92,12 @@ public class DoorController : MonoBehaviour
             yield return null;
         }
         transform.localRotation = openRot;
+
+        // 3. إيقاف الصوت مباشرة بعد انتهاء الحركة
+        if (audioSource.isPlaying)
+            audioSource.Stop();
     }
+
 
     void OnGUI()
     {

@@ -3,38 +3,34 @@
 [RequireComponent(typeof(Collider))]
 public class KeyPicku : MonoBehaviour
 {
-    public string playerTa = "Player";        // تأكد إنّ الـPlayer عليه Tag = "Player"
-    public KeyCode pickupKe = KeyCode.E;     // الزر اللي يأخذ المفتاح
-    [TextArea] public string promptTex = "اضغط E لأخذ المفتاح";
+    public string playerTa = "Player";             // تأكد التاق مضبوط
+    public KeyCode pickupKe = KeyCode.E;            // زر الالتقاط
+    [TextArea] public string promptTex = "Press E to pick up the key";
+    public AudioClip pickupSound;                     // صوت التقاط المفتاح
 
-    private bool canPicku = false;           // هل اللاعب قريب بما فيه الكفاية؟
-    private Player playerIn;        // مرجع لإنفنتوري اللاعب
+    private bool canPicku = false;                    // هل اللاعب قريب؟
+    private Player playerIn;                          // مرجع سكربت Player
 
     void Start()
     {
-        // خلي الكوليدر Trigger
+        // اضبط الكوليدر كـ Trigger
         var col = GetComponent<Collider>();
         col.isTrigger = true;
-        // تأكد إنّ الماتيريال أو الميش الحالي ظاهر للـTrigger (Layer & Mask)
     }
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Hit Trigger by: " + other.name);
         if (other.CompareTag(playerTa))
         {
-            Debug.Log("Player entered pickup area");
             canPicku = true;
             playerIn = other.GetComponent<Player>();
         }
     }
 
-
     void OnTriggerExit(Collider other)
     {
         if (other.CompareTag(playerTa))
         {
-            // اللاعب خرج من مجال الالتقاط
             canPicku = false;
             playerIn = null;
         }
@@ -44,10 +40,15 @@ public class KeyPicku : MonoBehaviour
     {
         if (canPicku && playerIn != null && Input.GetKeyDown(pickupKe))
         {
-            // اعطيه المفتاح
+            // 1. منح المفتاح
             playerIn.hasCarKey = true;
-            // خبّي المفتاح من المشهد
-            gameObject.SetActive(false);
+
+            // 2. شغّل الصوت فوراً في موقع المفتاح
+            if (pickupSound != null)
+                AudioSource.PlayClipAtPoint(pickupSound, transform.position);
+
+            // 3. احذف الكائن مباشرة (المجسم يختفي)
+            Destroy(gameObject);
         }
     }
 
@@ -55,9 +56,8 @@ public class KeyPicku : MonoBehaviour
     {
         if (canPicku && playerIn != null)
         {
-            // نص في منتصف الشاشة
             var size = GUI.skin.label.CalcSize(new GUIContent(promptTex));
-            float x = (Screen.width - size.x) / 2;
+            float x = (Screen.width - size.x) * 0.5f;
             float y = (Screen.height - size.y) * 0.8f;
             GUI.Label(new Rect(x, y, size.x, size.y), promptTex);
         }

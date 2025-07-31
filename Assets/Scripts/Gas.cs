@@ -1,40 +1,47 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
+[RequireComponent(typeof(AudioSource))]
 public class Gas : MonoBehaviour
 {
-    public string playerTa = "Player";        // تأكد إنّ الـPlayer عليه Tag = "Player"
-    public KeyCode pickupKe = KeyCode.F;     // الزر اللي يأخذ المفتاح
-    [TextArea] public string promptTex = "اضغط F لأخذ المفتاح";
+    public string playerTa = "Player";              // تأكد إنّ الـPlayer عليه Tag = "Player"
+    public KeyCode pickupKe = KeyCode.F;             // زر الالتقاط
+    [TextArea] public string promptTex = "Press F to pick up the gas can";
+    public AudioClip pickupSound;                      // صوت جمع الغاز
 
-    private bool canPicku = false;           // هل اللاعب قريب بما فيه الكفاية؟
-    private Player playerIn;        // مرجع لإنفنتوري اللاعب
+    private bool canPicku = false;                     // هل اللاعب قريب؟
+    private Player playerIn;                           // مرجع سكربت Player
+    private AudioSource audioSource;
+    private MeshRenderer[] renderers;                  // كل الـMeshRenderers تحت هذا الكائن
+    private Collider myCollider;
 
     void Start()
     {
-        // خلي الكوليدر Trigger
-        var col = GetComponent<Collider>();
-        col.isTrigger = true;
-        // تأكد إنّ الماتيريال أو الميش الحالي ظاهر للـTrigger (Layer & Mask)
+        // 1. تحضير الكوليدر كـ Trigger
+        myCollider = GetComponent<Collider>();
+        myCollider.isTrigger = true;
+
+        // 2. تحضير الـAudioSource
+        audioSource = GetComponent<AudioSource>();
+        audioSource.playOnAwake = false;
+
+        // 3. جمع كل MeshRenderers لإخفائها لاحقاً
+        renderers = GetComponentsInChildren<MeshRenderer>();
     }
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Hit Trigger by: " + other.name);
         if (other.CompareTag(playerTa))
         {
-            Debug.Log("Player entered pickup area");
             canPicku = true;
             playerIn = other.GetComponent<Player>();
         }
     }
 
-
     void OnTriggerExit(Collider other)
     {
         if (other.CompareTag(playerTa))
         {
-            // اللاعب خرج من مجال الالتقاط
             canPicku = false;
             playerIn = null;
         }
@@ -44,10 +51,21 @@ public class Gas : MonoBehaviour
     {
         if (canPicku && playerIn != null && Input.GetKeyDown(pickupKe))
         {
-            // اعطيه المفتاح
+            // منح الغاز
             playerIn.hasGas = true;
-            // خبّي المفتاح من المشهد
-            gameObject.SetActive(false);
+
+            // تشغيل الصوت فورًا
+            if (pickupSound != null)
+                audioSource.PlayOneShot(pickupSound);
+
+            // إخفاء الموديل (MeshRenderers) والـCollider
+            foreach (var r in renderers)
+                r.enabled = false;
+            myCollider.enabled = false;
+
+            // تدمير الكائن بعد انتهاء الصوت
+            float delay = pickupSound != null ? pickupSound.length : 0f;
+            Destroy(gameObject, delay);
         }
     }
 
@@ -55,9 +73,8 @@ public class Gas : MonoBehaviour
     {
         if (canPicku && playerIn != null)
         {
-            // نص في منتصف الشاشة
             var size = GUI.skin.label.CalcSize(new GUIContent(promptTex));
-            float x = (Screen.width - size.x) / 2;
+            float x = (Screen.width - size.x) * 0.5f;
             float y = (Screen.height - size.y) * 0.8f;
             GUI.Label(new Rect(x, y, size.x, size.y), promptTex);
         }
