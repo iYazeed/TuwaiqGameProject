@@ -2,10 +2,10 @@
 
 public class EnemyAttack : MonoBehaviour
 {
-    public Transform player;             // اللاعب
-    public Animator animator;            // Animator العدو
-    public float attackRange = 2f;       // مدى الهجوم
-    public int damageAmount = 10;        // مقدار الضرر
+    public Transform player;
+    public Animator animator;
+    public float attackRange = 2f;
+    public int damageAmount = 10;
 
     private bool canAttack = true;
 
@@ -15,16 +15,20 @@ public class EnemyAttack : MonoBehaviour
 
         if (distance <= attackRange && canAttack)
         {
-            // 🔥 تفعيل أنميشن الهجوم
-            animator.SetTrigger("Attack");
-
-            // ⚔️ تطبيق الضرر (يمكنك استبداله بـ Animation Event لو حبيت توقيت أدق)
-            player.GetComponent<PlayerHealth>().TakeDamage(damageAmount);
-
-            // ⏱️ منع الهجوم لمدة قصيرة لتجنب التكرار السريع
+            animator.SetTrigger("Attack"); // تشغيل الأنميشن
             canAttack = false;
-            Invoke(nameof(ResetAttack), 3f); // عدّل الوقت حسب نوع الهجوم
+
+            // ⏱️ تطبيق الضرر بعد تأخير مناسب (1.0 ثانية للتماشي مع الأنميشن)
+            Invoke(nameof(ApplyDamage), 1.2f);
+
+            // إعادة السماح بالهجوم بعد وقت مناسب
+            Invoke(nameof(ResetAttack), 6f);
         }
+    }
+
+    void ApplyDamage()
+    {
+        player.GetComponent<PlayerHealth>()?.TakeDamage(damageAmount);
     }
 
     void ResetAttack()

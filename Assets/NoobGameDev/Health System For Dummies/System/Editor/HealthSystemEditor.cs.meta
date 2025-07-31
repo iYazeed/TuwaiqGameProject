@@ -1,8 +1,7 @@
 fileFormatVersion: 2
-guid: 476cc7d7cd9874016adc216baab94a0a
-timeCreated: 1484146680
-licenseType: Store
+guid: 50aa1676abe9a4a49ac5879ddc853a6d
 MonoImporter:
+  externalObjects: {}
   serializedVersion: 2
   defaultReferences: []
   executionOrder: 0
@@ -14,6 +13,6 @@ AssetOrigin:
   serializedVersion: 1
   productId: 215755
   packageName: Health System For Dummies
-  packageVersion: 
-  assetPath: Assets/TutorialInfo/Scripts/Editor/ReadmeEditor.cs
-  uploadId: 0
+  packageVersion: 1.0.0
+  assetPath: Assets/NoobGameDev/Health System For Dummies/System/Editor/HealthSystemEditor.cs
+  uploadId: 486432

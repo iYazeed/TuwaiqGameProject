@@ -1,11 +1,12 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyChase : MonoBehaviour
 {
     public Transform player;         // ãæŞÚ ÇááÇÚÈ
     public float speed = 5f;         // ÓÑÚÉ ÇáãØÇÑÏÉ
     public float stoppingDistance = 2f; // ÇáãÓÇİÉ Çááí íÊæŞİ İíåÇ ÇáÚÏæ
-
+    public NavMeshAgent agent;
     void Update()
     {
         // ÇÍÓÈ ÇáãÓÇİÉ Èíä ÇáÚÏæ æÇááÇÚÈ
@@ -14,11 +15,9 @@ public class EnemyChase : MonoBehaviour
         // ÅĞÇ ßÇä ÇáÚÏæ ÈÚíÏ ÈãÇ İíå ÇáßİÇíÉ¡ íÊÍÑß äÍæå
         if (distance > stoppingDistance)
         {
-            Vector3 direction = (player.position - transform.position).normalized;
-            transform.position += direction * speed * Time.deltaTime;
+            agent.SetDestination(player.position);
+           
 
-            // ÇÎÊíÇÑí: æÌå ÇáÚÏæ äÍæ ÇááÇÚÈ
-            transform.LookAt(player);
         }
     }
 }
