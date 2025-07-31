@@ -39,7 +39,18 @@ public class PlayerHealth : MonoBehaviour
         Debug.Log("Player died!");
         animator.SetTrigger("Die"); // ÊİÚíá ÃäãíÔä ÇáãæÊ
         gameOverUI.SetActive(true); // ÚÑÖ æÇÌåÉ ÇáäåÇíÉ
+        Invoke("LoadMainMenu", 2f);          // ÈÚÏ ËÇäíÊíä äÍæá ááãäíæ
+
     }
+
+    void LoadMainMenu()
+    {
+        Debug.Log("Loading MainMenu...");
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        SceneManager.LoadScene("Menu");  // ÇáÊÍæíá ááŞÇÆãÉ
+    }
+
 
     // æÙÇÆİ ÇáÃÒÑÇÑ
     public void RestartGame()
